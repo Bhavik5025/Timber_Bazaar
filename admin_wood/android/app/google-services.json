@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "710914851562",
+    "project_id": "wood-stockpile",
+    "storage_bucket": "wood-stockpile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710914851562:android:294a602ace597750b78d93",
+        "android_client_info": {
+          "package_name": "com.example.admin_wood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710914851562-hki9bvrhh8c58kp8k31e55cue71l5ha5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK3zZU03M1S7LSZkmc-XZNG6YxFpdezAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710914851562-hki9bvrhh8c58kp8k31e55cue71l5ha5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "710914851562-n13f85q1aul5p81f2f1g2bh01k7t51bb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.woodStockpile.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710914851562:android:5459e73b2ea901cab78d93",
+        "android_client_info": {
+          "package_name": "com.example.wood_stockpile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710914851562-hki9bvrhh8c58kp8k31e55cue71l5ha5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK3zZU03M1S7LSZkmc-XZNG6YxFpdezAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710914851562-hki9bvrhh8c58kp8k31e55cue71l5ha5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "710914851562-n13f85q1aul5p81f2f1g2bh01k7t51bb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.woodStockpile.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

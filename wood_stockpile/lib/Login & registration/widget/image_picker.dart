@@ -24,6 +24,9 @@ class _uimage extends State<image_picker> {
       source: ImageSource.camera,
     );
     if (pimage == null) {
+      setState(() {
+        img = true;
+      });
       return;
     }
     setState(() {
@@ -35,6 +38,9 @@ class _uimage extends State<image_picker> {
   void imagepic1() async {
     final pimage = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pimage == null) {
+      setState(() {
+        img = true;
+      });
       return;
     }
     setState(() {

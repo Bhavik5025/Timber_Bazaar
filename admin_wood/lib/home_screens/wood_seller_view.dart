@@ -1,3 +1,5 @@
+
+
 import 'package:admin_wood/home_screens/TabBar.dart';
 import 'package:admin_wood/home_screens/home.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class wood_seller_view extends StatefulWidget {
     required this.longitude,
     required this.email,
     required this.uid,
+    required this.images,
     required this.verified,
   });
   var companyname = "";
@@ -33,6 +36,7 @@ class wood_seller_view extends StatefulWidget {
   var latitude = "";
   var longitude = "";
   var verified = "";
+  List<dynamic> images;
 
   @override
   State<StatefulWidget> createState() {
@@ -47,6 +51,7 @@ class _wood extends State<wood_seller_view> {
   Set<Marker> markers1 = {};
   double lat = 0;
   double long = 0;
+  List<dynamic> img = [];
 
   void marker() async {
     print("bhavik");
@@ -69,9 +74,40 @@ class _wood extends State<wood_seller_view> {
     super.initState();
     marker();
   }
-    void Reject() async{
-        
+
+  void Reject() async {
+    setState(() {
+      isverify = true;
+    });
+    await FirebaseFirestore.instance
+        .collection('unverified_wood_seller')
+        .doc(widget.uid)
+        .delete();
+
+    final smtpServer = gmail('bhavik5033@gmail.com', 'gpkfprebinnhmzqh');
+    final message = Message()
+      ..from = Address('bhavik5033@gmail.com', 'Wood StockPile Admin')
+      ..recipients
+          .add(widget.email) // Replace with the recipient's email address
+      ..subject = 'Wood StockPile :: ${DateTime.now()}'
+      ..text = 'Regarding verification.\n\n'
+      ..html =
+          "<h1>Authentication</h1>\n<p>Sorry, you have not been verified by the admin. Please provide valid data.</p>\n<p>Thank you...</p>";
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ${sendReport.toString()}');
+      setState(() {
+        isverify = false;
+      });
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => tabbar()));
+    } on MailerException catch (e) {
+      print('Message not sent.\n${e.toString()}');
+      isverify = false;
     }
+  }
+
   void approve() async {
     setState(() {
       isverify = true;
@@ -87,6 +123,7 @@ class _wood extends State<wood_seller_view> {
       'Address': widget.address,
       'certificate': widget.certificate,
       'type': 'wood_seller',
+      'images': widget.images,
       'verified': 'yes',
       'latitude': lat,
       'longitude': long
@@ -98,6 +135,7 @@ class _wood extends State<wood_seller_view> {
       'Mobile_no': widget.mobile_no,
       'Address': widget.address,
       'certificate': widget.certificate,
+      'images': widget.images,
       'type': 'wood_seller',
       'verified': 'yes',
       'latitude': lat,
@@ -131,8 +169,7 @@ class _wood extends State<wood_seller_view> {
       isverify = false;
     }
   }
-  
- 
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -208,6 +245,36 @@ class _wood extends State<wood_seller_view> {
                     ),
                     markers: markers1,
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Company Images",
+                      style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w800),
+                    ),
+                    Container(
+                      height: 400,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: <Widget>[
+                            for (String imageUrl in widget.images)
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Image.network(imageUrl),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -322,7 +389,7 @@ class _wood extends State<wood_seller_view> {
                           ))
                     ],
                   ),
-                )
+                ),
             ],
           ),
         ),

@@ -31,6 +31,7 @@ class _v_wood extends State<verified_wood_seller> {
             mobileNo: wlist['Mobile_no'],
             certificate: wlist['certificate'],
             type: wlist['type'],
+            images: (wlist['images'] as List<dynamic>).cast<String>(),
             verified: wlist['verified'],
             address: wlist['Address'],
             latitude: wlist['latitude'],
@@ -93,6 +94,7 @@ class _v_wood extends State<verified_wood_seller> {
                             longitude: woodsellers[index].longitude.toString(),
                             uid: woodsellers[index].uid.toString(),
                             verified: "yes",
+                            images: woodsellers[index].images.toList(),
                           );
                         }));
               },

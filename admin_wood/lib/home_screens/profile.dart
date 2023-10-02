@@ -93,7 +93,7 @@ class _outer extends State<outer> {
                       ElevatedButton(
                         onPressed: () {
                           FirebaseAuth.instance.signOut();
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: ((context) => login())));
@@ -101,7 +101,7 @@ class _outer extends State<outer> {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
-                            "LogOut",
+                            "Logout",
                             style: TextStyle(fontSize: 20),
                           ),
                         ),

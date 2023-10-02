@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wood_stockpile/Login%20&%20registration/user_registration.dart';
 import 'package:wood_stockpile/Login%20&%20registration/wood_seller_registration.dart';
+import 'package:wood_stockpile/intermediate_screen.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class login extends StatefulWidget {
   @override
@@ -14,8 +18,9 @@ class login extends StatefulWidget {
 class _login extends State<login> {
   var email = "";
   var password = "";
+  var isupload = false;
   final _formkey = GlobalKey<FormState>();
-  void btn() {
+  void btn() async {
     final isvalid = _formkey.currentState!.validate();
     if (!isvalid) {
       //show error message....
@@ -25,6 +30,35 @@ class _login extends State<login> {
     _formkey.currentState!.save();
     print(email);
     print(password);
+    try {
+      setState(() {
+        isupload = true;
+      });
+      final uc = await _firebase.signInWithEmailAndPassword(
+          email: email, password: password);
+      if (uc.user!.uid.isNotEmpty) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('congratulations')));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => IntermediateScreen()));
+      } else {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('user is not exist')));
+      }
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'email-already-in-use') {
+        //...
+      }
+      print('FirebaseAuthException occurred: ${error.code}');
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'authentication failed.')));
+      setState(() {
+        isupload = false;
+      });
+    }
   }
 
   @override
@@ -113,18 +147,28 @@ class _login extends State<login> {
                         const SizedBox(
                           height: 10,
                         ),
-                        ElevatedButton(
-                            onPressed: btn,
-                            child: const Text(
-                              "login",
-                              style: TextStyle(fontSize: 20),
+                        if (isupload)
+                          const Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.black),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black, // background color
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                            )),
+                          ),
+                        if (!isupload)
+                          ElevatedButton(
+                              onPressed: btn,
+                              child: const Text(
+                                "login",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Colors.black, // background color
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                              )),
                         const SizedBox(
                           height: 20,
                         ),

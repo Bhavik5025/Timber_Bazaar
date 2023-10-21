@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wood_stockpile/wood_seller_dashboard/furniture_details.dart';
+import 'package:wood_stockpile/wood_seller_dashboard/wood_details.dart';
 
 class Newproduct extends StatefulWidget {
   @override
@@ -70,7 +71,12 @@ class _newproduct extends State<Newproduct> {
                       child: Column(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WoodDetails()));
+                            },
                             icon: Lottie.asset("assets/lottie/woodsize.json"),
                             iconSize: 100,
                           ),

@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wood_stockpile/wood_seller_dashboard/homescreen.dart';
 import 'package:uuid/uuid.dart';
+
 class furniture_details extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -23,6 +24,7 @@ class _furniture extends State<furniture_details> {
   var highlight1 = false;
   var delivery_charge;
   dynamic product_price;
+  String imagesId = Uuid().v4();
   var isupload = false;
   List<String> downloadurl = [];
   final _formkey = GlobalKey<FormState>();
@@ -76,7 +78,7 @@ class _furniture extends State<furniture_details> {
             .child(FirebaseAuth.instance.currentUser!.uid);
         for (int i = 0; i < imageFileList.length; i++) {
           final XFile imageFile = imageFileList[i];
-          final String fileName = 'image_$i.jpg'; // Unique name for each image
+          final String fileName = imagesId; // Unique name for each image
           final Reference fileRef = storageRef.child(fileName);
 
           try {
@@ -87,10 +89,13 @@ class _furniture extends State<furniture_details> {
             print('Error uploading image $i: $e');
           }
         }
-        await FirebaseFirestore.instance.collection('products').doc(productId).set({
+        await FirebaseFirestore.instance
+            .collection('products')
+            .doc(productId)
+            .set({
           "Company_email": prefs.getString('company_email'),
           "c_id": FirebaseAuth.instance.currentUser!.uid,
-          "pid":productId,
+          "pid": productId,
           "product_name": product_name,
           "category": "Furniture",
           "price": product_price,

@@ -2,6 +2,7 @@ import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_not
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wood_stockpile/wood_seller_dashboard/Wood_Profile.dart';
+import 'package:wood_stockpile/wood_seller_dashboard/myorders.dart';
 import 'package:wood_stockpile/wood_seller_dashboard/product.dart';
 
 class homescreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _homescreen extends State<homescreen> {
   /// Controller to handle bottom nav bar and also handles initial page
   final _controller = NotchBottomBarController(index: 0);
 
-  int maxCount = 5;
+  int maxCount = 3;
 
   @override
   void dispose() {
@@ -29,10 +30,8 @@ class _homescreen extends State<homescreen> {
   /// widget list
   final List<Widget> bottomBarPages = [
     product(),
-    const Page2(),
-    const Page3(),
-    const Page4(),
-    Wood_profile(),
+    my_orders(),
+    WoodSellerProfile(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -75,37 +74,17 @@ class _homescreen extends State<homescreen> {
                 ),
                 const BottomBarItem(
                   inActiveItem: Icon(
-                    Icons.star,
+                    Icons.fire_truck,
                     color: Colors.blueGrey,
                   ),
                   activeItem: Icon(
-                    Icons.star,
-                    color: Colors.blueAccent,
+                    Icons.fire_truck,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   itemLabel: 'Page 2',
                 ),
 
                 ///svg example
-                BottomBarItem(
-                  inActiveItem: Lottie.asset(
-                    'assets/lottie/network-error.json',
-                  ),
-                  activeItem: Lottie.asset(
-                    'assets/lottie/network-error.json',
-                  ),
-                  itemLabel: 'Page 3',
-                ),
-                const BottomBarItem(
-                  inActiveItem: Icon(
-                    Icons.settings,
-                    color: Colors.blueGrey,
-                  ),
-                  activeItem: Icon(
-                    Icons.settings,
-                    color: Colors.pink,
-                  ),
-                  itemLabel: 'Page 4',
-                ),
                 const BottomBarItem(
                   inActiveItem: Icon(
                     Icons.person,
@@ -113,7 +92,7 @@ class _homescreen extends State<homescreen> {
                   ),
                   activeItem: Icon(
                     Icons.person,
-                    color: Colors.yellow,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   itemLabel: 'Page 5',
                 ),
@@ -155,7 +134,8 @@ class Page4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.blue, child: const Center(child: Text('Page 4')));
+        color: const Color.fromARGB(255, 255, 255, 255),
+        child: const Center(child: Text('Page 4')));
   }
 }
 

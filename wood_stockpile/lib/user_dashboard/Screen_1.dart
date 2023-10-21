@@ -7,12 +7,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:ui' as ui;
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Screen_1 extends StatefulWidget {
   @override
   _Screen1State createState() => _Screen1State();
 }
 
 class _Screen1State extends State<Screen_1> {
+  Future<void>? initialization;
   GoogleMapController? mapController;
   Location location = Location();
   Set<Marker> markers = Set();
@@ -36,7 +39,7 @@ class _Screen1State extends State<Screen_1> {
 
     final response = await http.get(
       Uri.parse(
-          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${curlet},${curlong}&radius=500&type=furniture_store&key=$apiKey'),
+          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${curlet},${curlong}&radius=5000&type=furniture_store&key=$apiKey'),
     );
 
     if (response.statusCode == 200) {
@@ -74,8 +77,34 @@ class _Screen1State extends State<Screen_1> {
   }
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
+    initialization = initializeLocation();
+    // bool _serviceEnabled;
+    // PermissionStatus _permissionGranted;
+    // LocationData _locationData;
+    // final Uint8List customMarkerIcon =
+    //     await getba("assets/image/location.png", 120);
+    // _serviceEnabled = await location.serviceEnabled();
+    // if (!_serviceEnabled) {
+    //   _serviceEnabled = await location.requestService();
+    //   if (!_serviceEnabled) {
+    //     return;
+    //   }
+    // }
+
+    // _permissionGranted = await location.hasPermission();
+    // if (_permissionGranted == PermissionStatus.denied) {
+    //   _permissionGranted = await location.requestPermission();
+    //   if (_permissionGranted != PermissionStatus.granted) {
+    //     return;
+    //   }
+    // }
+    // _locationData = await location.getLocation();
+    // final prefs = await SharedPreferences.getInstance();
+    // prefs.setDouble("let", _locationData.latitude!);
+    // prefs.setDouble("long", _locationData.longitude!);
+
     // location.onLocationChanged.listen((locationData) {
     //   //   // Update the map's camera position to the current location
     //   mapController?.animateCamera(
@@ -87,6 +116,33 @@ class _Screen1State extends State<Screen_1> {
     //     ),
     //   );
     // });
+  }
+
+  Future<void> initializeLocation() async {
+    bool _serviceEnabled = await location.serviceEnabled();
+
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    PermissionStatus _permissionGranted = await location.hasPermission();
+
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    LocationData _locationData = await location.getLocation();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setDouble("let", _locationData.latitude!);
+    prefs.setDouble("long", _locationData.longitude!);
+
+    // Set the current location and update the markers
   }
 
   @override

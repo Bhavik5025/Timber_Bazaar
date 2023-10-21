@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wood_stockpile/wood_seller_dashboard/NewProduct.dart';
+import 'package:wood_stockpile/wood_seller_dashboard/itemsView.dart';
 import 'package:wood_stockpile/wood_seller_dashboard/product_list.dart';
 
 class product extends StatefulWidget {
@@ -76,7 +77,7 @@ class _product extends State<product> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => product_list()));
+                                    builder: (context) => ItemView()));
                           },
                           icon: Lottie.asset(
                             "assets/lottie/history.json",

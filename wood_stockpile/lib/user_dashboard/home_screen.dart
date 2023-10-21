@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wood_stockpile/user_dashboard/Profile.dart';
 import 'package:wood_stockpile/user_dashboard/Screen_1.dart';
+import 'package:wood_stockpile/user_dashboard/orders.dart';
+import 'package:wood_stockpile/user_dashboard/products.dart';
+import 'package:wood_stockpile/user_dashboard/woods_search.dart';
 
 class Homescreen extends StatefulWidget {
   @override
@@ -29,9 +32,9 @@ class _homescreen extends State<Homescreen> {
   /// widget list
   final List<Widget> bottomBarPages = [
     Screen_1(),
-    const Page2(),
-    const Page3(),
-    const Page4(),
+    products(),
+    woodsearch(),
+    orders(),
     Profile(),
   ];
 
@@ -75,34 +78,36 @@ class _homescreen extends State<Homescreen> {
                 ),
                 const BottomBarItem(
                   inActiveItem: Icon(
-                    Icons.star,
+                    Icons.table_restaurant_rounded,
                     color: Colors.blueGrey,
                   ),
                   activeItem: Icon(
-                    Icons.star,
-                    color: Colors.blueAccent,
+                    Icons.chair_alt,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   itemLabel: 'Page 2',
                 ),
-
-                ///svg example
-                BottomBarItem(
-                  inActiveItem: Lottie.asset(
-                    'assets/lottie/network-error.json',
-                  ),
-                  activeItem: Lottie.asset(
-                    'assets/lottie/network-error.json',
-                  ),
-                  itemLabel: 'Page 3',
-                ),
                 const BottomBarItem(
                   inActiveItem: Icon(
-                    Icons.settings,
+                    Icons.woo_commerce_rounded,
                     color: Colors.blueGrey,
                   ),
                   activeItem: Icon(
-                    Icons.settings,
-                    color: Colors.pink,
+                    Icons.woo_commerce_rounded,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                  itemLabel: 'Page 3',
+                ),
+
+                ///svg example
+                const BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.fire_truck,
+                    color: Colors.blueGrey,
+                  ),
+                  activeItem: Icon(
+                    Icons.fire_truck,
+                    color: Colors.white,
                   ),
                   itemLabel: 'Page 4',
                 ),
@@ -113,7 +118,7 @@ class _homescreen extends State<Homescreen> {
                   ),
                   activeItem: Icon(
                     Icons.person,
-                    color: Colors.yellow,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   itemLabel: 'Page 5',
                 ),
@@ -126,46 +131,5 @@ class _homescreen extends State<Homescreen> {
             )
           : null,
     );
-  }
-}
-
-class Page2 extends StatelessWidget {
-  const Page2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.green, child: const Center(child: Text('Page 2')));
-  }
-}
-
-class Page3 extends StatelessWidget {
-  const Page3({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.red, child: const Center(child: Text('Page 3')));
-  }
-}
-
-class Page4 extends StatelessWidget {
-  const Page4({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.blue, child: const Center(child: Text('Page 4')));
-  }
-}
-
-class Page5 extends StatelessWidget {
-  const Page5({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.lightGreenAccent,
-        child: const Center(child: Text('Page 5')));
   }
 }
